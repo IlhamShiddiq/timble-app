@@ -6,7 +6,9 @@ import cookieParser from 'cookie-parser';
 
 import sequelize from './configs/db.config';
 import configs from './configs/general.config'
+
 import generalRouter from './routes/general.route';
+import authRouter from './routes/auth.route';
 
 sequelize.authenticate().then(() => console.log('db connected'))
 
@@ -22,6 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', generalRouter)
+app.use('/auth', authRouter)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

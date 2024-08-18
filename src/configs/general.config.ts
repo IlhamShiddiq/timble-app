@@ -3,7 +3,8 @@ dotenv.config();
 
 const configs = {
   app: {
-    port: +(process.env.APP_PORT || '3000')
+    port: +(process.env.APP_PORT || '3000'),
+    jwt_secret: process.env.JWT_SECRET || ''
   },
   db: {
     database: process.env.DB_NAME || 'timble-app',
