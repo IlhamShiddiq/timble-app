@@ -3,14 +3,15 @@ import cors from 'cors';
 import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import dotenv from "dotenv";
 
+import sequelize from './configs/db.config';
+import configs from './configs/general.config'
 import generalRouter from './routes/general.route';
 
-dotenv.config();
+sequelize.authenticate().then(() => console.log('db connected'))
 
 const app: Express = express();
-const port: string = process.env.APP_PORT || '3000';
+const port: number = configs.app.port
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
