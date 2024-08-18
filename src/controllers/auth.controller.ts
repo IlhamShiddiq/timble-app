@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import { LoginRequest } from '../requests/user.request'
 import { generateJwt, comparePassword } from '../utils/general.util'
+import UserModel from '../db/models/user.model';
 
 import UserRepository from '../repositories/user.repository';
 
 const signUp = async (req: Request, res: Response): Promise<Response> => {
   const payload: LoginRequest = req.body as LoginRequest
-  const newUser = await UserRepository.create(payload)
+  const newUser: UserModel = await UserRepository.create(payload)
 
   return res.json({
     status: 200,
@@ -24,7 +25,7 @@ const signUp = async (req: Request, res: Response): Promise<Response> => {
 
 const login = async (req: Request, res: Response): Promise<Response> => {
   const { username, password } = req.body
-  const user = await UserRepository.getUserByUsername(username)
+  const user: UserModel | null = await UserRepository.getUserByUsername(username)
   if (!user) {
     return res.status(400).json({
       status: 400,
@@ -32,7 +33,7 @@ const login = async (req: Request, res: Response): Promise<Response> => {
     })
   }
 
-  const isPasswordMatched = await comparePassword(password, user.password)
+  const isPasswordMatched: boolean = await comparePassword(password, user.password)
   if (!isPasswordMatched) {
     return res.status(400).json({
       status: 400,

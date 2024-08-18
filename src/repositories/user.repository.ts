@@ -1,18 +1,19 @@
 import { Op, literal } from 'sequelize';
 import { sql } from '@sequelize/core';
-import User from '../db/models/user.model';
 import { LoginRequest } from '../requests/user.request';
 import { generateUuid, hashPassword } from '../utils/general.util';
 
-const getUserById = async (id: string) => {
+import User from '../db/models/user.model';
+
+const getUserById = async (id: string): Promise<User | null> => {
   return await User.findOne({ where: { id } })
 }
 
-const getUserByUsername = async (username: string) => {
+const getUserByUsername = async (username: string): Promise<User | null> => {
   return await User.findOne({ where: { username } })
 }
 
-const getRandomMatch = async (id: string, gender: string) => {
+const getRandomMatch = async (id: string, gender: string): Promise<User | null> => {
   return await User.findOne(
     {
       where: {
@@ -34,7 +35,7 @@ const getRandomMatch = async (id: string, gender: string) => {
   )
 }
 
-const create = async (payload: LoginRequest) => {
+const create = async (payload: LoginRequest): Promise<User> => {
   return await User.create({
     id: generateUuid(),
     name: payload.name,
@@ -45,7 +46,7 @@ const create = async (payload: LoginRequest) => {
   })
 }
 
-const setPremiumById = async (id: string) => {
+const setPremiumById = async (id: string): Promise<[number]> => {
   return await User.update(
     { is_premium: true },
     {

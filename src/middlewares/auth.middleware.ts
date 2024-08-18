@@ -9,7 +9,7 @@ interface JwtPayload {
 }
 
 const verifyToken = (req: UserAuthRequest, res: Response, next: NextFunction) => {
-  const token = req.header('Authorization')
+  const token: string | undefined = req.header('Authorization')
 
   if (!token) {
     return res.status(403).json({
@@ -19,7 +19,7 @@ const verifyToken = (req: UserAuthRequest, res: Response, next: NextFunction) =>
   }
 
   try {
-    const decoded = jwt.verify(token.split(' ')[1], configs.app.jwt_secret) as JwtPayload
+    const decoded: JwtPayload = jwt.verify(token.split(' ')[1], configs.app.jwt_secret) as JwtPayload
     req.user = decoded.id
   } catch (err) {
     return res.status(401).json({

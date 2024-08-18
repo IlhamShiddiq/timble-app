@@ -1,9 +1,10 @@
 import { literal } from 'sequelize';
-import UserSwipe from '../db/models/user.swipe.model';
 import { UserSwipeCreateRequest } from '../requests/user.request'
 import { generateUuid } from '../utils/general.util';
 
-const create = async (payload: UserSwipeCreateRequest) => {
+import UserSwipe from '../db/models/user.swipe.model';
+
+const create = async (payload: UserSwipeCreateRequest): Promise<UserSwipe> => {
   return await UserSwipe.create({
     id: generateUuid(),
     user_id: payload.user_id,
@@ -12,7 +13,7 @@ const create = async (payload: UserSwipeCreateRequest) => {
   })
 }
 
-const countRandomMatchLimit = async (id: string) => {
+const countRandomMatchLimit = async (id: string): Promise<number> => {
   return await UserSwipe.count({
     where: {
       user_id: id,

@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { UserSwipeCreateRequest } from '../requests/user.request';
 import { UserAuthRequest } from '../requests/general.request';
 
+import UserModel from '../db/models/user.model';
 import UserRepository from '../repositories/user.repository';
 import UserSwipeRepository from '../repositories/user.swipe.repository';
 import userRepository from '../repositories/user.repository';
@@ -10,7 +11,7 @@ const getRandomMatch = async (req: UserAuthRequest, res: Response): Promise<Resp
   const payload: UserSwipeCreateRequest = req.body as UserSwipeCreateRequest;
   payload.user_id = req.user || ''
 
-  const user = await UserRepository.getUserById(payload.user_id)
+  const user: UserModel | null = await UserRepository.getUserById(payload.user_id)
   if (!user) {
     return res.status(404).json({
       status: 404,
@@ -26,7 +27,7 @@ const getRandomMatch = async (req: UserAuthRequest, res: Response): Promise<Resp
     })
   }
 
-  const targetUser = await UserRepository.getRandomMatch(payload.user_id, user.gender)
+  const targetUser: UserModel | null = await UserRepository.getRandomMatch(payload.user_id, user.gender)
 
   return res.json({
     status: 200,
@@ -43,7 +44,7 @@ const randomMatchAction = async (req: UserAuthRequest, res: Response): Promise<R
   const payload: UserSwipeCreateRequest = req.body as UserSwipeCreateRequest;
   payload.user_id = req.user || ''
 
-  const user = await UserRepository.getUserById(payload.user_id)
+  const user: UserModel | null = await UserRepository.getUserById(payload.user_id)
   if (!user) {
     return res.status(404).json({
       status: 404,
