@@ -1,11 +1,26 @@
-import express, { Request, Response } from 'express';
+import express, { Express } from 'express';
+import cors from 'cors';
+import path from 'path';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import dotenv from "dotenv";
 
-const app = express();
-const port = process.env.PORT || 3000;
+import generalRouter from './routes/general.route';
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to timble-app API!');
-});
+dotenv.config();
+
+const app: Express = express();
+const port: string = process.env.APP_PORT || '3000';
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', generalRouter)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
