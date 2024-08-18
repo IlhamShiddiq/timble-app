@@ -8,7 +8,9 @@
     "start": "ts-node src/index.ts",
     "start-dev": "nodemon src/index.ts",
     "lint": "npx eslint ./src",
-    "lint:fix": "npx eslint ./src --fix"
+    "lint:fix": "npx eslint ./src --fix",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed:all"
   },
   "author": "",
   "license": "ISC",

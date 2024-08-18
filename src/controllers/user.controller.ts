@@ -31,7 +31,7 @@ const getRandomMatch = async (req: UserAuthRequest, res: Response): Promise<Resp
 
   return res.json({
     status: 200,
-    message: 'Sign up successful!',
+    message: 'Get random match',
     data: targetUser ? {
       id: targetUser?.id,
       name: targetUser?.name,
