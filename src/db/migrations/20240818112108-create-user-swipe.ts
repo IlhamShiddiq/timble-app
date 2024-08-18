@@ -2,6 +2,7 @@ import { QueryInterface } from 'sequelize';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async up (queryInterface: QueryInterface, Sequelize: any) {
     await queryInterface.createTable('user_swipes', {
       id: {
@@ -34,7 +35,7 @@ module.exports = {
     });
   },
 
-  async down (queryInterface: QueryInterface, Sequelize: any) {
+  async down (queryInterface: QueryInterface) {
     await queryInterface.dropTable('user_swipes');
   }
 };

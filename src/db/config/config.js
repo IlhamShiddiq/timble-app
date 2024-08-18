@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 require('ts-node/register');
 const configs = require('../../configs/general.config');
 

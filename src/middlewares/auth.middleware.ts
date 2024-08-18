@@ -22,6 +22,7 @@ const verifyToken = (req: UserAuthRequest, res: Response, next: NextFunction) =>
     const decoded: JwtPayload = jwt.verify(token.split(' ')[1], configs.app.jwt_secret) as JwtPayload
     req.user = decoded.id
   } catch (err) {
+    console.log(err)
     return res.status(401).json({
       status: 401,
       message: 'Invalid token or token already expired',

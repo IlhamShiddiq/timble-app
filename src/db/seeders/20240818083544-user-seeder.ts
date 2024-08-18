@@ -22,9 +22,9 @@ type UserModel = {
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface: QueryInterface, Sequelize: any) {
+  async up (queryInterface: QueryInterface) {
     const response: AxiosResponse = await axios.get('https://dummyjson.com/users?limit=30')
-    let users: UserModel[] = await Promise.all(response.data.users.map(async (user: UserDummyJson) => {
+    const users: UserModel[] = await Promise.all(response.data.users.map(async (user: UserDummyJson) => {
       const { firstName, lastName, username, password, gender } = user;
       const hashedPassword: string = await hashPassword(password)
       const container: UserModel = {
@@ -42,7 +42,7 @@ module.exports = {
     await queryInterface.bulkInsert('users', users)
   },
 
-  async down (queryInterface: QueryInterface, Sequelize: any) {
+  async down () {
     //
   }
 };
